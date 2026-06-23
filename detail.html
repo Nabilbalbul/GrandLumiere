@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Film — Grand Lumière Cinema</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="grain"></div>
+    <div class="vignette"></div>
+    <div class="curtain-wrap" id="curtainWrap">
+        <div class="curtain left">
+            <div class="curtain-tassel"></div>
+        </div>
+        <div class="curtain right">
+            <div class="curtain-tassel"></div>
+        </div>
+    </div>
+
+
+
+    <header>
+        <a class="brand" href="index.html">
+            <span class="brand-mark">GL</span> GRAND LUMIÈRE
+        </a>
+
+        <nav>
+            <a href="index.html">Beranda</a>
+            <a href="index.html#now-showing-section">Sedang Tayang</a>
+            <a href="history.html" class="nav-history-link">Riwayat Tiket <span class="history-badge"
+                    id="historyBadge"></span></a>
+        </nav>
+    </header>
+
+    <main class="page-enter">
+        <a class="back-link" href="index.html">&larr; Kembali ke Daftar Film</a>
+        <div class="detail-hero">
+            <div class="detail-content">
+                <div class="detail-poster" id="detailPoster"></div>
+                <div class="detail-info">
+                    <div class="section-eyebrow" id="detailGenre"></div>
+                    <h1 id="detailTitle"></h1>
+                    <div class="tag-row" id="detailTags"></div>
+                </div>
+             </div>
+        </div>
+        
+        
+        <div class="detail-body">
+             <p class="synopsis" id="detailSynopsis"></p>
+             <div class="showtime-section">
+                <div class="section-eyebrow">Jadwal Tayang Hari Ini</div>
+                <div class="showtime-grid" id="showtimeGrid"></div>
+            </div>
+            
+            <div class="showtime-section">
+                <div class="section-eyebrow">Para Pemeran</div>
+                <div class="cast-row" id="castRow"></div>
+            </div>
+            
+            <div class="detail-cta">
+                <button class="btn-gold disabled" id="continueBtn" onclick="goToBooking()" type="button">Lanjut
+                    Pilih Kursi</button>
+                </div>
+            </div>
+
+
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
