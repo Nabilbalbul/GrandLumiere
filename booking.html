@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesan Tiket — Grand Lumière Cinema</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="grain"></div>
+    <div class="vignette"></div>
+
+    <div class="curtain-wrap" id="curtainWrap">
+        <div class="curtain left">
+            <div class="curtain-tassel"></div>
+        </div>
+        <div class="curtain right">
+            <div class="curtain-tassel"></div>
+        </div>
+    </div>
+
+    <header>
+        <a class="brand" href="index.html">
+            <span class="brand-mark">GL</span> GRAND LUMIÈRE
+        </a>
+        <nav>
+            <a href="index.html">Beranda</a>
+            <a href="index.html#now-showing-section">Sedang Tayang</a>
+            <a href="history.html" class="nav-history-link">Riwayat Tiket <span class="history-badge"
+                    id="historyBadge"></span></a>
+        </nav>
+    </header>
+
+    <main class="page-enter">
+        <div class="booking-wrap">
+
+            <a class="back-link" style="position:static; margin-bottom:30px;" href="javascript:history.back()">&larr;
+                Kembali</a>
+
+            <div class="booking-summary">
+                <div>
+                    <h2 id="bookingTitle"></h2>
+                    <div class="sub" id="bookingShowtime"></div>
+                </div>
+                <div class="sub">STUDIO 1 &middot; TEATER UTAMA</div>
+            </div>
+
+            <div class="booking-showtime-switch" id="bookingShowtimeSwitch"></div>
+
+            <div class="screen-curve"></div>
+
+            <div class="seat-map" id="seatMap"></div>
+
+            <div class="seat-legend">
+                <span><i class="legend-box available"></i>Tersedia</span>
+                <span><i class="legend-box selected"></i>Dipilih</span>
+                <span><i class="legend-box taken"></i>Terisi</span>
+            </div>
+
+            <div class="section-head" style="margin-top:70px; margin-bottom:40px;">
+                <div class="section-eyebrow">Data Pemesan</div>
+                <h2 style="font-size:1.8rem;">Lengkapi Pesanan</h2>
+            </div>
+
+            <div class="booking-form">
+                <div>
+                    <label>Nama Lengkap</label>
+                    <input type="text" id="buyerName" placeholder="Tuliskan nama Anda">
+                </div>
+                <div>
+                    <label>Nomor Telepon</label>
+                    <input type="text" id="buyerPhone" placeholder="08xx xxxx xxxx">
+                </div>
+            </div>
+
+            <div class="booking-footer">
+                <div class="total-price">
+                    <small>Total Pembayaran</small>
+                    <span id="totalPrice">Rp 0</span>
+                </div>
+                <button class="btn-gold" onclick="issueTicket()" type="button"><span id="issueBtnLabel">Cetak
+                        Tiket</span></button>
+            </div>
+
+        </div>
+    </main>
+
+    <div class="ticket-overlay" id="ticketOverlay">
+        <div class="ticket">
+            <button class="ticket-close" onclick="closeTicket()" type="button">&times;</button>
+            <h3>GRAND LUMIÈRE CINEMA</h3>
+            <div class="movie-name" id="ticketMovie"></div>
+            <div class="ticket-row"><span class="label">Penonton</span><span class="val" id="ticketName"></span></div>
+            <div class="ticket-row"><span class="label">Jadwal</span><span class="val" id="ticketTime"></span></div>
+            <div class="ticket-row"><span class="label">Studio</span><span class="val">1 &middot; Utama</span></div>
+            <div class="ticket-divider"></div>
+            <div class="ticket-row"><span class="label">Kursi</span><span class="val" id="ticketSeats"></span></div>
+            <div class="ticket-row"><span class="label">Total</span><span class="val" id="ticketTotal"></span></div>
+            <div class="ticket-note" id="ticketNote"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
