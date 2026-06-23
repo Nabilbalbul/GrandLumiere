@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grand Lumière Cinema</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="grain"></div>
+<div class="vignette"></div>
+
+<div class="curtain-wrap" id="curtainWrap">
+  <div class="curtain left"><div class="curtain-tassel"></div></div>
+  <div class="curtain right"><div class="curtain-tassel"></div></div>
+</div>
+
+<header>
+  <a class="brand" href="index.html">
+    <span class="brand-mark">GL</span> GRAND LUMIÈRE
+  </a>
+  <nav>
+    <a href="index.html" class="active">Beranda</a>
+    <a href="#" onclick="scrollToShowing(); return false;">Sedang Tayang</a>
+    <a href="history.html" class="nav-history-link">Riwayat Tiket <span class="history-badge" id="historyBadge"></span></a>
+  </nav>
+</header>
+
+<main class="page-enter">
+
+  <div class="hero">
+    <div class="hero-glow"></div>
+    <p class="hero-eyebrow">Sejak 1966 &middot; Teater Layar Agung</p>
+    <h1>Grand Lumière<em>Cinema</em></h1>
+    <p>Tempat cerita-cerita besar diputar di bawah lampu kristal dan tirai beludru merah.</p>
+    <div class="hero-cta">
+      <button class="btn-gold" onclick="scrollToShowing()" type="button">Lihat Film Tayang</button>
+      <button class="btn-outline" onclick="scrollToShowing()" type="button">Pesan Tiket</button>
+    </div>
+    <div class="scroll-cue"><div class="line"></div>GULIR</div>
+  </div>
+
+  <div class="section" id="now-showing-section">
+    <div class="section-head">
+      <div class="section-eyebrow">Layar Utama</div>
+      <h2>Sedang Tayang</h2>
+      <div class="rule"></div>
+    </div>
+    <div class="film-grid" id="filmGrid"></div>
+  </div>
+
+</main>
+
+<footer>GRAND LUMIÈRE CINEMA &middot; JL. LAYAR AGUNG NO. 7 &middot; SEJAK 1928</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
