@@ -636,3 +636,67 @@ footer{
   font-family:'Cinzel'; font-size:.68rem; letter-spacing:1.5px; color:var(--gold-bright);
   text-transform:uppercase;
 }
+
+/* ============ HISTORY PAGE ============ */
+.history-wrap{ padding:150px 6vw 120px; max-width:920px; margin:0 auto; }
+.history-list{ display:flex; flex-direction:column; gap:24px; }
+.history-card{
+  display:flex; justify-content:space-between; align-items:flex-start; gap:24px; flex-wrap:wrap;
+  border:1px solid rgba(212,175,55,.25);
+  background:linear-gradient(160deg, rgba(42,22,15,.5), rgba(12,10,9,.5));
+  padding:28px 30px;
+  transition:border-color .35s ease, transform .35s ease;
+}
+.history-card:hover{ border-color:var(--gold); transform:translateY(-2px); }
+.history-main{ flex:1; min-width:240px; }
+.history-top{ display:flex; align-items:center; gap:14px; margin-bottom:10px; }
+.history-id{
+  font-family:'Cinzel'; font-size:.62rem; letter-spacing:1.5px; color:var(--cream-dim);
+}
+.history-main h3{
+  font-family:'Playfair Display'; font-weight:600; font-size:1.5rem; color:var(--cream);
+  margin-bottom:10px;
+}
+.history-meta{
+  display:flex; gap:20px; flex-wrap:wrap;
+  font-family:'Cormorant Garamond'; font-size:1.05rem; color:var(--cream-dim);
+  margin-bottom:10px;
+}
+.history-timestamps{
+  display:flex; gap:20px; flex-wrap:wrap;
+  font-family:'Cinzel'; font-size:.6rem; letter-spacing:1px; color:rgba(205,187,163,.6);
+  text-transform:uppercase;
+}
+.history-actions{
+  display:flex; gap:12px; flex-shrink:0;
+}
+.btn-sm{
+  padding:10px 22px; font-size:.66rem; margin-left:0;
+}
+.btn-danger{
+  font-family:'Cinzel'; letter-spacing:2px; font-size:.66rem; text-transform:uppercase;
+  background:transparent; color:var(--wine-light);
+  border:1px solid rgba(122,31,43,.5); padding:10px 22px; cursor:pointer;
+  transition:all .3s ease;
+}
+.btn-danger:hover{ background:var(--wine); color:var(--cream); border-color:var(--wine); }
+
+.history-empty{
+  text-align:center; padding:80px 20px;
+  border:1px dashed rgba(212,175,55,.3);
+}
+.history-empty p{
+  font-family:'Playfair Display'; font-style:italic; font-size:1.4rem; color:var(--cream-dim);
+  margin-bottom:24px;
+}
+
+@media (max-width:760px){
+  .detail-content{ grid-template-columns:1fr; }
+  .detail-poster{ max-width:200px; }
+  nav{ gap:18px; }
+  nav a{ font-size:.62rem; }
+  .booking-form{ grid-template-columns:1fr; }
+  .history-card{ flex-direction:column; }
+  .history-actions{ width:100%; }
+  .history-actions button{flex:1;}
+}
