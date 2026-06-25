@@ -1,0 +1,415 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,900;1,500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Cinzel:wght@500;600;700&display=swap');
+
+:root{
+  --black-velvet:#0c0a09;
+  --mahogany:#1a0f0a;
+  --mahogany-light:#2a160f;
+  --gold:#d4af37;
+  --gold-bright:#f0cf6c;
+  --wine:#7a1f2b;
+  --wine-light:#9c2c3a;
+  --cream:#f5e6d3;
+  --cream-dim:#cdbba3;
+  --shadow-deep: 0 20px 60px rgba(0,0,0,.6);
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+
+body{
+  background:var(--black-velvet);
+  color:var(--cream);
+  font-family:'Cormorant Garamond', serif;
+  overflow-x:hidden;
+  min-height:100vh;
+}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
+}
+
+/* ============ FILM GRAIN + VIGNETTE AMBIENCE ============ */
+.grain{
+  position:fixed; inset:0; pointer-events:none; z-index:5; opacity:.05; mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.vignette{
+  position:fixed; inset:0; pointer-events:none; z-index:4;
+  background:radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,.55) 100%);
+}
+
+/* ============ CURTAIN INTRO ============ */
+.curtain-wrap{
+  position:fixed; inset:0; z-index:1000; display:flex; pointer-events:none;
+}
+.curtain{
+  width:50%; height:100%; background:
+    repeating-linear-gradient(90deg, #5c1019 0 18px, #6e1620 18px 36px, #4a0d14 36px 54px);
+  box-shadow: inset 0 0 120px rgba(0,0,0,.6);
+  position:relative;
+  transition:transform 1.6s cubic-bezier(.76,0,.24,1);
+}
+.curtain::before{
+  content:'';
+  position:absolute; inset:0;
+  background:linear-gradient(180deg, rgba(255,255,255,.08), transparent 30%, transparent 70%, rgba(0,0,0,.4));
+}
+.curtain::after{
+  content:'';
+  position:absolute; bottom:0; left:0; right:0; height:14%;
+  background:linear-gradient(180deg, transparent, rgba(0,0,0,.5));
+  box-shadow: 0 -6px 30px rgba(0,0,0,.5);
+}
+.curtain.left{ transform-origin:left; box-shadow: 8px 0 40px rgba(0,0,0,.7);}
+.curtain.right{ transform-origin:right; box-shadow: -8px 0 40px rgba(0,0,0,.7);}
+.curtain-wrap.open .curtain.left{ transform:translateX(-102%); }
+.curtain-wrap.open .curtain.right{ transform:translateX(102%); }
+.curtain-wrap.hidden{ display:none; }
+
+.curtain-tassel{
+  position:absolute; top:0; bottom:0; width:14px; background:linear-gradient(90deg, transparent, var(--gold) 40%, #8a6a1f 60%, transparent);
+  opacity:.7;
+}
+.curtain.left .curtain-tassel{ right:0; }
+.curtain.right .curtain-tassel{ left:0; }
+
+/* ============ HEADER / NAV ============ */
+header{
+  position:fixed; top:0; left:0; right:0; z-index:200;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:22px 5vw;
+  background:linear-gradient(180deg, rgba(12,10,9,.92), rgba(12,10,9,0));
+  backdrop-filter:blur(2px);
+}
+.brand{
+  font-family:'Cinzel', serif;
+  font-size:1.3rem;
+  letter-spacing:3px;
+  color:var(--gold-bright);
+  text-decoration:none;
+  display:flex; align-items:center; gap:10px;
+}
+.brand-mark{
+  width:30px;height:30px;
+  border:1.5px solid var(--gold);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.85rem;
+  color:var(--gold);
+}
+nav{display:flex; gap:36px;}
+nav a{
+  color:var(--cream-dim);
+  text-decoration:none;
+  font-family:'Cinzel', serif;
+  font-size:.72rem;
+  letter-spacing:2.5px;
+  text-transform:uppercase;
+  position:relative;
+  cursor:pointer;
+  transition:color .3s;
+}
+nav a::after{
+  content:''; position:absolute; left:0; bottom:-8px; width:0; height:1px; background:var(--gold);
+  transition:width .35s ease;
+}
+nav a:hover{ color:var(--gold-bright); }
+nav a:hover::after{ width:100%; }
+nav a.active{ color:var(--gold-bright); }
+nav a.active::after{ width:100%; }
+
+/* ============ PAGE ENTRY ANIMATION ============ */
+.page-enter{ animation:fadeUp .7s ease both; }
+@keyframes fadeUp{
+  from{ opacity:0; transform:translateY(18px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+
+/* ============ HERO (index.html) ============ */
+.hero{
+  position:relative;
+  min-height:100vh;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center;
+  padding:0 6vw;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 30%, rgba(122,31,43,.35), transparent 70%),
+    linear-gradient(180deg, var(--black-velvet) 0%, var(--mahogany) 60%, var(--black-velvet) 100%);
+  overflow:hidden;
+}
+.hero-glow{
+  position:absolute; top:-10%; left:50%; transform:translateX(-50%);
+  width:900px; height:900px;
+  background:radial-gradient(circle, rgba(212,175,55,.12), transparent 60%);
+  pointer-events:none;
+  animation:pulseGlow 8s ease-in-out infinite;
+}
+@keyframes pulseGlow{
+  0%,100%{ opacity:.6; transform:translateX(-50%) scale(1); }
+  50%{ opacity:1; transform:translateX(-50%) scale(1.08); }
+}
+.hero-eyebrow{
+  font-family:'Cinzel', serif;
+  letter-spacing:5px;
+  font-size:.78rem;
+  color:var(--gold);
+  text-transform:uppercase;
+  margin-bottom:22px;
+  opacity:0;
+  animation:reveal .9s ease forwards;
+  animation-delay:.2s;
+}
+.hero-eyebrow::before, .hero-eyebrow::after{
+  content:'✦'; margin:0 14px; color:var(--wine-light);
+}
+.hero h1{
+  font-family:'Playfair Display', serif;
+  font-weight:700;
+  font-size:clamp(3rem, 9vw, 7.5rem);
+  line-height:.95;
+  color:var(--cream);
+  text-shadow:0 0 40px rgba(212,175,55,.25);
+  opacity:0;
+  animation:reveal 1s ease forwards;
+  animation-delay:.45s;
+}
+.hero h1 em{
+  font-style:italic;
+  color:var(--gold-bright);
+  display:block;
+  font-size:.7em;
+  margin-top:4px;
+}
+.hero p{
+  max-width:560px;
+  margin:28px auto 0;
+  font-size:1.3rem;
+  color:var(--cream-dim);
+  font-style:italic;
+  opacity:0;
+  animation:reveal 1s ease forwards;
+  animation-delay:.7s;
+}
+@keyframes reveal{
+  from{ opacity:0; transform:translateY(14px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+.hero-cta{
+  margin-top:42px;
+  opacity:0;
+  animation:reveal 1s ease forwards;
+  animation-delay:.95s;
+}
+.btn-gold{
+  font-family:'Cinzel', serif;
+  letter-spacing:2.5px;
+  font-size:.78rem;
+  text-transform:uppercase;
+  background:linear-gradient(135deg, var(--gold-bright), var(--gold) 60%, #9c7a1f);
+  color:#1a0f0a;
+  border:none;
+  padding:16px 42px;
+  cursor:pointer;
+  position:relative;
+  box-shadow:0 12px 30px rgba(212,175,55,.25);
+  transition:transform .35s ease, box-shadow .35s ease;
+  text-decoration:none;
+  display:inline-block;
+}
+.btn-gold:hover{ transform:translateY(-3px); box-shadow:0 18px 36px rgba(212,175,55,.4); }
+.btn-outline{
+  font-family:'Cinzel', serif;
+  letter-spacing:2.5px;
+  font-size:.78rem;
+  text-transform:uppercase;
+  background:transparent;
+  color:var(--cream);
+  border:1px solid rgba(245,230,211,.4);
+  padding:16px 38px;
+  cursor:pointer;
+  transition:all .35s ease;
+  margin-left:14px;
+  text-decoration:none;
+  display:inline-block;
+}
+.btn-outline:hover{ border-color:var(--gold); color:var(--gold-bright); }
+
+.scroll-cue{
+  position:absolute; bottom:36px; left:50%; transform:translateX(-50%);
+  font-family:'Cinzel'; font-size:.65rem; letter-spacing:3px; color:var(--cream-dim);
+  display:flex; flex-direction:column; align-items:center; gap:10px;
+  opacity:.7;
+}
+.scroll-cue .line{ width:1px; height:34px; background:linear-gradient(180deg, var(--gold), transparent); animation:scrollMove 2s ease-in-out infinite; }
+@keyframes scrollMove{ 0%{opacity:0; transform:scaleY(.4);} 50%{opacity:1; transform:scaleY(1);} 100%{opacity:0; transform:scaleY(.4) translateY(10px);} }
+
+/* ============ NOW SHOWING ============ */
+.section{
+  padding:120px 6vw;
+  position:relative;
+}
+.section-head{
+  text-align:center;
+  margin-bottom:70px;
+}
+.section-eyebrow{
+  font-family:'Cinzel'; letter-spacing:4px; font-size:.72rem; color:var(--wine-light);
+  text-transform:uppercase; margin-bottom:14px;
+}
+.section-head h2{
+  font-family:'Playfair Display'; font-weight:600; font-size:clamp(2.2rem,4vw,3.4rem);
+  color:var(--gold-bright);
+}
+.section-head .rule{
+  width:70px; height:1px; background:var(--gold); margin:22px auto 0; opacity:.6;
+}
+
+.film-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(260px,1fr));
+  gap:42px;
+  max-width:1280px;
+  margin:0 auto;
+}
+.film-card{
+  position:relative;
+  cursor:pointer;
+  perspective:1000px;
+  text-decoration:none;
+  color:inherit;
+  display:block;
+}
+.poster-frame{
+  position:relative;
+  aspect-ratio:2/3;
+  border:1px solid rgba(212,175,55,.25);
+  border-radius:2px;
+  overflow:hidden;
+  background:linear-gradient(160deg, var(--mahogany-light), var(--black-velvet));
+  transition:transform .55s cubic-bezier(.2,.8,.2,1), box-shadow .55s ease, border-color .4s;
+}
+.film-card:hover .poster-frame{
+  transform:translateY(-12px) scale(1.02);
+  box-shadow:var(--shadow-deep), 0 0 0 1px var(--gold);
+  border-color:var(--gold);
+}
+
+/* ---- Poster artwork: tiap film punya palet & motif Art Deco sendiri ---- */
+.poster-art{
+  position:absolute; inset:0;
+  overflow:hidden;
+}
+.poster-art .art-bg{
+  position:absolute; inset:0;
+}
+.poster-art .art-motif{
+  position:absolute; inset:0;
+  opacity:.9;
+}
+.poster-art .art-vignette{
+  position:absolute; inset:0;
+  background:linear-gradient(180deg, rgba(0,0,0,.15) 0%, transparent 35%, transparent 60%, rgba(0,0,0,.75) 100%);
+}
+.poster-art .art-title{
+  position:absolute; left:0; right:0; bottom:22px;
+  text-align:center; padding:0 16px;
+  font-family:'Playfair Display'; font-weight:700; font-style:italic;
+  font-size:1.3rem; line-height:1.15;
+  color:var(--cream);
+  text-shadow:0 2px 14px rgba(0,0,0,.7);
+  letter-spacing:.5px;
+}
+.poster-art .art-title .sub{
+  display:block; margin-top:6px;
+  font-family:'Cinzel'; font-style:normal; font-size:.5rem; letter-spacing:3px;
+  color:var(--gold-bright); text-transform:uppercase; opacity:.9;
+}
+
+/* Velvet Noir — biru malam & merah anggur, motif lampu kota & hujan */
+.poster-velvet-noir .art-bg{
+  background:linear-gradient(165deg, #1b2230 0%, #0c0a09 55%, #2a0f14 100%);
+}
+.poster-velvet-noir .art-motif{
+  background-image:
+    radial-gradient(circle at 25% 22%, rgba(212,175,55,.35) 0%, transparent 3%),
+    radial-gradient(circle at 70% 15%, rgba(212,175,55,.25) 0%, transparent 2.4%),
+    radial-gradient(circle at 85% 30%, rgba(212,175,55,.2) 0%, transparent 2%),
+    repeating-linear-gradient(100deg, rgba(245,230,211,.05) 0px, transparent 2px, transparent 14px),
+    linear-gradient(180deg, transparent 60%, rgba(122,31,43,.35) 100%);
+}
+
+/* Golden Hour Waltz — gold & rose, motif sunburst Art Deco */
+.poster-golden-hour-waltz .art-bg{
+  background:linear-gradient(165deg, #3a2410 0%, #1a0f0a 50%, #4a1620 100%);
+}
+.poster-golden-hour-waltz .art-motif{
+  background-image:
+    repeating-conic-gradient(from 0deg at 50% 78%, rgba(212,175,55,.22) 0deg 4deg, transparent 4deg 16deg);
+  mask-image: radial-gradient(circle at 50% 78%, black 0%, black 55%, transparent 75%);
+}
+
+/* The Last Reel — hijau jungle & gold, motif garis ekspedisi/peta */
+.poster-the-last-reel .art-bg{
+  background:linear-gradient(165deg, #1f2b1a 0%, #0c0a09 55%, #2a160f 100%);
+}
+.poster-the-last-reel .art-motif{
+  background-image:
+    repeating-linear-gradient(115deg, rgba(212,175,55,.12) 0px 1px, transparent 1px 22px),
+    repeating-linear-gradient(25deg, rgba(212,175,55,.08) 0px 1px, transparent 1px 30px),
+    radial-gradient(circle at 50% 30%, rgba(212,175,55,.18), transparent 55%);
+}
+
+/* Midnight Marquee — merah marquee & hitam, motif bulb lampu marquee */
+.poster-midnight-marquee .art-bg{
+  background:linear-gradient(165deg, #2a0f12 0%, #0c0a09 50%, #1a0f0a 100%);
+}
+.poster-midnight-marquee .art-motif{
+  background-image:
+    radial-gradient(circle, rgba(212,175,55,.55) 0 2px, transparent 2.5px);
+  background-size: 26px 26px;
+  background-position: 0 0;
+  mask-image: repeating-linear-gradient(180deg, black 0px 24px, transparent 24px 26px);
+}
+
+.poster-spotlight{
+  position:absolute; inset:0;
+  background:radial-gradient(circle at 50% 0%, rgba(212,175,55,.18), transparent 60%);
+  opacity:0; transition:opacity .5s ease;
+}
+.film-card:hover .poster-spotlight{ opacity:1; }
+.poster-genre-tag{
+  position:absolute; top:14px; left:14px;
+  font-family:'Cinzel'; font-size:.6rem; letter-spacing:2px; text-transform:uppercase;
+  background:rgba(12,10,9,.7); color:var(--gold);
+  padding:5px 10px; border:1px solid rgba(212,175,55,.35);
+}
+.poster-rating{
+  position:absolute; top:14px; right:14px;
+  font-family:'Cinzel'; font-size:.65rem; color:var(--gold-bright);
+  background:rgba(12,10,9,.7); border:1px solid rgba(212,175,55,.35);
+  padding:5px 9px;
+}
+.poster-overlay-info{
+  position:absolute; bottom:0; left:0; right:0; padding:18px;
+  background:linear-gradient(0deg, rgba(0,0,0,.9), transparent);
+  transform:translateY(10px); opacity:.92;
+}
+.poster-overlay-info .runtime{
+  font-family:'Cinzel'; font-size:.62rem; letter-spacing:1.5px; color:var(--cream-dim);
+}
+.film-meta{
+  padding-top:18px; text-align:left;
+}
+.film-meta h3{
+  font-family:'Playfair Display'; font-weight:600; font-size:1.3rem; color:var(--cream);
+  margin-bottom:6px;
+}
+.film-meta .genre-line{
+  font-family:'Cinzel'; font-size:.62rem; letter-spacing:1.5px; color:var(--gold);
+  text-transform:uppercase;
+}
+
+footer{
+  text-align:center; padding:50px 6vw; border-top:1px solid rgba(212,175,55,.15);
+  font-family:'Cinzel'; font-size:.65rem; letter-spacing:2px; color:var(--cream-dim);
+}
