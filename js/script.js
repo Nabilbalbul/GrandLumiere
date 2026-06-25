@@ -127,3 +127,130 @@ function getOccupiedSeats(filmId, showtime, excludeTicketId){
 
   return Array.from(new Set([...base, ...fromTickets]));
 }
+
+function addTicket(ticket){
+  const tickets = getAllTickets();
+  tickets.unshift(ticket);
+  saveAllTickets(tickets);
+}
+
+function updateTicket(ticketId, newData){
+  const tickets = getAllTickets().map(t => t.id === ticketId ? { ...t, ...newData } : t);
+  saveAllTickets(tickets);
+}
+
+function deleteTicket(ticketId){
+  const tickets = getAllTickets().filter(t => t.id !== ticketId);
+  saveAllTickets(tickets);
+}
+
+function generateTicketId(){
+  return 'GLC-' + Date.now().toString(36).toUpperCase() + '-' + Math.floor(Math.random()*900+100);
+}
+
+function formatTicketDate(iso){
+  const d = new Date(iso);
+  return d.toLocaleDateString('id-ID', { day:'2-digit', month:'long', year:'numeric' }) +
+         ' · ' + d.toLocaleTimeString('id-ID', { hour:'2-digit', minute:'2-digit' });
+}
+
+/* ===================== CURTAIN INTRO (semua halaman) ===================== */
+function initCurtain(){
+  const wrap = document.getElementById('curtainWrap');
+  if(!wrap) return;
+  window.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+      wrap.classList.add('open');
+      setTimeout(() => wrap.classList.add('hidden'), 1800);
+    }, 400);
+  });
+}
+
+/* ===================== INDEX.HTML — DAFTAR FILM ===================== */
+function renderFilmGrid(){
+  const grid = document.getElementById('filmGrid');
+  if(!grid) return;
+  grid.innerHTML = FILMS.map(f => `
+    <a class="film-card" href="detail.html?film=${f.id}">
+      <div class="poster-frame">
+        ${renderPosterArt(f)}
+        <div class="poster-spotlight"></div>
+        <div class="poster-genre-tag">${f.genre.split(' ')[0]}</div>
+        <div class="poster-rating">${f.rating}</div>
+        <div class="poster-overlay-info"><div class="runtime">${f.runtime}</div></div>
+      </div>
+      <div class="film-meta">
+        <h3>${f.title}</h3>
+        <div class="genre-line">${f.genre}</div>
+      </div>
+    </a>
+  `).join('');
+}
+
+function scrollToShowing(){
+  const target = document.getElementById('now-showing-section');
+  if(target) target.scrollIntoView({behavior:'smooth'});
+}
+
+/* ===================== UPDATE BADGE JUMLAH RIWAYAT DI NAVBAR ===================== */
+function updateHistoryBadge(){
+  const badge = document.getElementById('historyBadge');
+  if(!badge) return;
+  const count = getAllTickets().length;
+  if(count > 0){
+    badge.textContent = count;
+    badge.style.display = 'inline-flex';
+  } else {
+    badge.style.display = 'none';
+  }
+}
+
+/* ===================== DETAIL.HTML — DETAIL FILM ===================== */
+let currentFilm = null;
+let currentShowtime = null;
+
+function initDetailPage(){
+  const filmId = getQueryParam('film');
+  currentFilm = getFilmById(filmId) || FILMS[0];
+
+  document.getElementById('detailPoster').innerHTML = renderPosterArt(currentFilm) + '<div class="art-frame-line"></div>';
+  document.getElementById('detailGenre').textContent = currentFilm.genre;
+  document.getElementById('detailTitle').textContent = currentFilm.title;
+  document.getElementById('detailSynopsis').textContent = currentFilm.synopsis;
+  document.title = currentFilm.title + ' — Grand Lumière Cinema';
+
+  document.getElementById('detailTags').innerHTML = currentFilm.tags
+    .map(t => `<span class="tag-pill">${t}</span>`).join('') +
+    `<span class="tag-pill">${currentFilm.runtime}</span><span class="tag-pill">${currentFilm.rating}</span>`;
+
+  document.getElementById('showtimeGrid').innerHTML = currentFilm.showtimes.map(t => `
+    <button class="showtime-btn" onclick="selectShowtime('${t}', this)" type="button">
+      ${t} <small>STUDIO 1</small>
+    </button>
+  `).join('');
+
+  document.getElementById('castRow').innerHTML = currentFilm.cast.map(c => `
+    <div class="cast-chip">
+      <div class="cast-avatar">${c.charAt(0)}</div>
+      <span>${c}</span>
+    </div>
+  `).join('');
+}
+
+function selectShowtime(time, el){
+  currentShowtime = time;
+  document.querySelectorAll('.showtime-btn').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+
+  const cta = document.getElementById('continueBtn');
+  if(cta) cta.classList.remove('disabled');
+}
+
+function goToBooking(){
+  if(!currentShowtime){
+    alert('Silakan pilih jadwal tayang terlebih dahulu.');
+    return;
+  }
+  saveSelection({ filmId: currentFilm.id, showtime: currentShowtime, editTicketId: null });
+  window.location.href = 'booking.html';
+}
