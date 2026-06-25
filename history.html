@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Riwayat Tiket — Grand Lumière Cinema</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="grain"></div>
+<div class="vignette"></div>
+
+<div class="curtain-wrap" id="curtainWrap">
+  <div class="curtain left"><div class="curtain-tassel"></div></div>
+  <div class="curtain right"><div class="curtain-tassel"></div></div>
+</div>
+
+<header>
+  <a class="brand" href="index.html">
+    <span class="brand-mark">GL</span> GRAND LUMIÈRE
+  </a>
+  <nav>
+    <a href="index.html">Beranda</a>
+    <a href="index.html#now-showing-section">Sedang Tayang</a>
+    <a href="history.html" class="active nav-history-link">Riwayat Tiket <span class="history-badge" id="historyBadge"></span></a>
+  </nav>
+</header>
+
+<main class="page-enter">
+  <div class="history-wrap">
+
+    <div class="section-head" style="text-align:left; margin-bottom:50px;">
+      <div class="section-eyebrow">Catatan Pemesanan</div>
+      <h2 style="text-align:left;">Riwayat Tiket Anda</h2>
+      <p style="font-family:'Cormorant Garamond'; font-style:italic; color:var(--cream-dim); font-size:1.15rem; margin-top:18px; max-width:560px;">
+        Semua tiket yang pernah Anda cetak tersimpan di sini, lengkap dengan waktu pemesanan. Anda bisa mengubah jadwal &amp; kursi, atau membatalkan tiket kapan saja.
+      </p>
+    </div>
+
+    <div class="history-list" id="historyList"></div>
+
+    <div class="history-empty" id="historyEmpty" style="display:none;">
+      <p>Belum ada tiket yang dipesan.</p>
+      <a class="btn-gold" href="index.html">Lihat Film Tayang</a>
+    </div>
+
+  </div>
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
