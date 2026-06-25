@@ -422,3 +422,78 @@ function closeTicket() {
   // setelah ditutup, arahkan ke riwayat supaya hasilnya langsung terlihat
   window.location.href = 'history.html';
 }
+
+/* ===================== HISTORY.HTML — RIWAYAT TIKET ===================== */
+function initHistoryPage(){
+  renderHistoryList();
+}
+
+function renderHistoryList(){
+  const wrap = document.getElementById('historyList');
+  const empty = document.getElementById('historyEmpty');
+  if(!wrap) return;
+
+  const tickets = getAllTickets().sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+  if(tickets.length === 0){
+    wrap.innerHTML = '';
+    if(empty) empty.style.display = 'block';
+    return;
+  }
+  if(empty) empty.style.display = 'none';
+
+  wrap.innerHTML = tickets.map(t => `
+    <div class="history-card">
+      <div class="history-main">
+        <div class="history-top">
+          <span class="history-id">${t.id}</span>
+          <span class="tag-pill">${t.showtime}</span>
+        </div>
+        <h3>${t.movieTitle}</h3>
+        <div class="history-meta">
+          <span>${t.buyerName}${t.buyerPhone ? ' · ' + t.buyerPhone : ''}</span>
+          <span>Kursi ${t.seats.join(', ')}</span>
+          <span>Rp ${t.total.toLocaleString('id-ID')}</span>
+        </div>
+        <div class="history-timestamps">
+          <span>Dibuat: ${formatTicketDate(t.createdAt)}</span>
+          ${t.updatedAt !== t.createdAt ? `<span>Diubah: ${formatTicketDate(t.updatedAt)}</span>` : ''}
+        </div>
+      </div>
+      <div class="history-actions">
+        <button type="button" class="btn-outline btn-sm" onclick="editTicketFromHistory('${t.id}')">Edit</button>
+        <button type="button" class="btn-danger btn-sm" onclick="confirmDeleteTicket('${t.id}')">Hapus</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function editTicketFromHistory(ticketId){
+  const ticket = getTicketById(ticketId);
+  if(!ticket) return;
+  saveSelection({ filmId: ticket.filmId, showtime: ticket.showtime, editTicketId: ticketId });
+  window.location.href = 'booking.html';
+}
+
+function confirmDeleteTicket(ticketId){
+  const ticket = getTicketById(ticketId);
+  if(!ticket) return;
+  const ok = confirm(`Hapus tiket ${ticket.movieTitle} (${ticket.id}) ini? Tindakan ini tidak bisa dibatalkan.`);
+  if(ok){
+    deleteTicket(ticketId);
+    renderHistoryList();
+    updateHistoryBadge();
+  }
+}
+
+/* ===================== INIT OTOMATIS PER HALAMAN ===================== */
+initCurtain();
+
+document.addEventListener('DOMContentLoaded', () => {
+  if(document.getElementById('filmGrid')) renderFilmGrid();
+  if(document.getElementById('detailTitle')) initDetailPage();
+  if(document.getElementById('seatMap')) initBookingPage();
+  if(document.getElementById('historyList')) initHistoryPage();
+  updateHistoryBadge();
+});
+
