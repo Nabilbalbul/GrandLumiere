@@ -499,3 +499,140 @@ footer{
 .detail-cta .btn-gold.disabled{
   opacity:.4; cursor:not-allowed; transform:none; box-shadow:none;
 }
+
+/* ============ BOOKING PAGE (booking.html) ============ */
+.booking-wrap{ padding:150px 6vw 100px; max-width:1100px; margin:0 auto; }
+.booking-summary{
+  display:flex; justify-content:space-between; align-items:center;
+  border-bottom:1px solid rgba(212,175,55,.25); padding-bottom:24px; margin-bottom:50px;
+  flex-wrap:wrap; gap:20px;
+}
+.booking-summary h2{ font-family:'Playfair Display'; color:var(--gold-bright); font-size:1.8rem; }
+.booking-summary .sub{ font-family:'Cinzel'; font-size:.7rem; letter-spacing:1.5px; color:var(--cream-dim); margin-top:6px; }
+
+.screen-curve{
+  width:70%; max-width:600px; height:14px; margin:0 auto 60px;
+  border-radius:50%;
+  background:radial-gradient(ellipse at top, rgba(212,175,55,.5), transparent 80%);
+  box-shadow:0 -30px 60px rgba(212,175,55,.15);
+  position:relative;
+}
+.screen-curve::after{
+  content:'L A Y A R'; position:absolute; top:-34px; left:50%; transform:translateX(-50%);
+  font-family:'Cinzel'; font-size:.65rem; letter-spacing:4px; color:var(--cream-dim);
+}
+
+.seat-map{
+  display:flex; flex-direction:column; gap:14px; align-items:center; margin-bottom:60px;
+}
+.seat-row{ display:flex; gap:10px; align-items:center; }
+.row-label{
+  font-family:'Cinzel'; font-size:.7rem; color:var(--gold); width:20px; text-align:center;
+}
+.seat{
+  width:30px; height:26px; border-radius:6px 6px 3px 3px;
+  background:linear-gradient(160deg, var(--mahogany-light), var(--mahogany));
+  border:1px solid rgba(212,175,55,.3);
+  cursor:pointer;
+  transition:all .25s ease;
+}
+.seat:hover{ border-color:var(--gold); transform:translateY(-3px); }
+.seat.taken{
+  background:rgba(122,31,43,.4); border-color:rgba(122,31,43,.6);
+  cursor:not-allowed; opacity:.6;
+}
+.seat.taken:hover{ transform:none; }
+.seat.selected{
+  background:linear-gradient(160deg, var(--gold-bright), var(--gold));
+  border-color:var(--gold-bright);
+  box-shadow:0 0 16px rgba(212,175,55,.5);
+}
+.seat-legend{
+  display:flex; gap:30px; justify-content:center; margin-top:24px;
+  font-family:'Cinzel'; font-size:.65rem; letter-spacing:1px; color:var(--cream-dim);
+}
+.seat-legend span{ display:flex; align-items:center; gap:8px; }
+.legend-box{ width:16px; height:14px; border-radius:4px; display:inline-block; }
+.legend-box.available{ background:linear-gradient(160deg,var(--mahogany-light),var(--mahogany)); border:1px solid rgba(212,175,55,.3); }
+.legend-box.selected{ background:linear-gradient(160deg,var(--gold-bright),var(--gold)); }
+.legend-box.taken{ background:rgba(122,31,43,.4); }
+
+.booking-form{
+  display:grid; grid-template-columns:1fr 1fr; gap:24px; max-width:680px; margin:0 auto 40px;
+}
+.booking-form .full{ grid-column:1/-1; }
+.booking-form label{
+  font-family:'Cinzel'; font-size:.65rem; letter-spacing:1.5px; color:var(--gold); text-transform:uppercase;
+  display:block; margin-bottom:8px;
+}
+.booking-form input{
+  width:100%; background:transparent; border:none; border-bottom:1px solid rgba(245,230,211,.3);
+  color:var(--cream); font-family:'Cormorant Garamond'; font-size:1.1rem; padding:8px 0;
+  outline:none; transition:border-color .3s;
+}
+.booking-form input:focus{ border-color:var(--gold); }
+
+.booking-footer{
+  display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:24px;
+  max-width:680px; margin:0 auto; border-top:1px solid rgba(212,175,55,.2); padding-top:30px;
+}
+.total-price{ font-family:'Playfair Display'; font-size:1.6rem; color:var(--gold-bright); }
+.total-price small{ display:block; font-family:'Cinzel'; font-size:.6rem; letter-spacing:1.5px; color:var(--cream-dim); }
+
+/* ============ TICKET MODAL ============ */
+.ticket-overlay{
+  position:fixed; inset:0; background:rgba(0,0,0,.75); backdrop-filter:blur(4px);
+  display:flex; align-items:center; justify-content:center; z-index:500;
+  opacity:0; pointer-events:none; transition:opacity .4s ease;
+}
+.ticket-overlay.show{ opacity:1; pointer-events:all; }
+.ticket{
+  width:380px; background:linear-gradient(165deg, var(--mahogany-light), var(--black-velvet));
+  border:1px solid var(--gold); position:relative; padding:40px 34px;
+  transform:scale(.85) translateY(30px); transition:transform .5s cubic-bezier(.2,.8,.2,1);
+  box-shadow:var(--shadow-deep);
+}
+.ticket-overlay.show .ticket{ transform:scale(1) translateY(0); }
+.ticket::before, .ticket::after{
+  content:''; position:absolute; width:26px; height:26px; background:var(--black-velvet);
+  border-radius:50%; top:50%; transform:translateY(-50%);
+}
+.ticket::before{ left:-13px; }
+.ticket::after{ right:-13px; }
+.ticket h3{ font-family:'Cinzel'; letter-spacing:3px; font-size:.7rem; color:var(--gold); text-align:center; margin-bottom:6px;}
+.ticket .movie-name{ font-family:'Playfair Display'; font-size:1.7rem; text-align:center; margin-bottom:24px; color:var(--cream); }
+.ticket-divider{ border-top:1px dashed rgba(212,175,55,.4); margin:24px 0; }
+.ticket-row{ display:flex; justify-content:space-between; margin-bottom:14px; font-family:'Cormorant Garamond'; }
+.ticket-row .label{ font-family:'Cinzel'; font-size:.6rem; letter-spacing:1.5px; color:var(--cream-dim); text-transform:uppercase; }
+.ticket-row .val{ color:var(--gold-bright); font-size:1.05rem; }
+.ticket-close{
+  position:absolute; top:14px; right:18px; background:none; border:none; color:var(--cream-dim);
+  font-size:1.3rem; cursor:pointer; transition:color .3s;
+}
+.ticket-close:hover{ color:var(--gold-bright); }
+.ticket-note{
+  text-align:center; margin-top:24px;
+  font-family:'Cinzel'; font-size:.6rem; letter-spacing:1.5px; color:var(--gold);
+  text-transform:uppercase;
+}
+
+/* ============ NAVBAR HISTORY BADGE ============ */
+.nav-history-link{ position:relative; display:inline-flex; align-items:center; gap:8px; }
+.history-badge{
+  display:none; align-items:center; justify-content:center;
+  min-width:18px; height:18px; padding:0 5px;
+  background:var(--wine-light); color:var(--cream);
+  border-radius:9px; font-family:'Cinzel'; font-size:.6rem; letter-spacing:0;
+}
+
+/* ============ BOOKING SHOWTIME SWITCHER (mode edit) ============ */
+.booking-showtime-switch{
+  display:flex; gap:12px; flex-wrap:wrap; margin:18px 0 50px;
+}
+.edit-banner{
+  display:flex; align-items:center; gap:12px;
+  background:rgba(212,175,55,.08); border:1px solid rgba(212,175,55,.35);
+  padding:14px 20px; margin-bottom:30px;
+  font-family:'Cinzel'; font-size:.68rem; letter-spacing:1.5px; color:var(--gold-bright);
+  text-transform:uppercase;
+}
